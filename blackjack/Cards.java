@@ -1,10 +1,21 @@
 import java.util.Random;
 
 class Cards{
-	private String SPADE = "♠";
-	private String HEART = "♥";
-	private String DIAMOND = "♦";
-	private String CLOVER = "♣";
+	enum Suit{
+		SPADE("♠"),
+		HEART("♥"),
+		DIAMOND("♦"),
+		CLOVER("♣");
+
+		private final String symbol;
+		
+		Suit(String symbol){
+			this.symbol = symbol;
+		}
+		String getSymbol(){
+			return this.symbol;
+		}
+	}
 	private int[][] cards = new int[52][2];
 
 	public void init(){
@@ -14,7 +25,7 @@ class Cards{
 				cards[i + 13 * j][1] = j;
 			}
 		}
-	}	
+	}
 	public void shuffle(){
 		Random random = new Random();
 		for (int i = 0; i < 52; i++){
@@ -30,12 +41,12 @@ class Cards{
 			if (i % 13 == 12) System.out.println("");
 		}
 	}
-	
+
 	private String _num2suit(int j){
-		if (j == 0) return SPADE;
-		if (j == 1) return HEART;
-		if (j == 2) return DIAMOND;
-		return CLOVER;
+		if (j == 0) return Suit.SPADE.getSymbol();
+		if (j == 1) return Suit.HEART.getSymbol();
+		if (j == 2) return Suit.DIAMOND.getSymbol();
+		return Suit.CLOVER.getSymbol();
 	};
 	private String _num2rank(int i){
 		if (i == 0) return "ACE";
@@ -51,6 +62,5 @@ class Cards{
 		if (i == 10) return "JACK";
 		if (i == 11) return "QUEEN";
 		return "KING";
-	}
-	
+	}	
 }
