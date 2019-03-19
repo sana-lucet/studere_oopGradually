@@ -1,91 +1,7 @@
 import java.util.Random;
 import java.util.ArrayList;
 
-class Cards{
-	enum Suit{
-		SPADE(0,"♠"),
-		HEART(1,"♥"),
-		DIAMOND(2,"♦"),
-		CLOVER(3,"♣");
-
-		private final int _value;
-		private final String _symbol;
-		
-		Suit(int value, String symbol){
-			this._value = value;
-			this._symbol = symbol;
-		}
-		String getSymbol(){
-			return this._symbol;
-		}
-		int getValue(){
-			return this._value;
-		}
-	}
-	
-	enum Rank{
-		ACE(1,"A"),
-		TWO(2,"2"),
-		THREE(3,"3"),
-		FOUR(4,"4"),
-		FIVE(5,"5"),
-		SIX(6,"6"),
-		SEVEN(7,"7"),
-		EIGHT(8,"8"),
-		NINE(9,"9"),
-		TEN(10,"10"),
-		JACK(11,"J"),
-		QUEEN(12,"Q"),
-		KING(13,"K");		
-
-		private final int _value;		
-		private final String _symbol;
-		
-		Rank(int value, String symbol){
-			this._value = value;
-			this._symbol = symbol;
-		}
-		String getSymbol(){
-			return this._symbol;
-		}
-		int getValue(){
-			return this._value;
-		}
-	}
-
-	class Card{
-		private Rank _rank;
-		private Suit _suit;
-		// private int _suit;
-
-		private Card(Rank rank, Suit suit){
-			this._rank = rank;
-			this._suit = suit;			
-		}
-		
-		// private Card(int rank, int suit){
-		// 	this._rank = rank;
-		// 	this._suit = suit;
-		// }
-		
-		String getSuitSymbol(){
-			return this._suit.getSymbol();
-		}
-		
-		// int getSuit(){
-		// 	return this._suit.getValue();
-		// }
-		
-		String getRankSymbol(){
-			return this._rank.getSymbol();
-		}
-		
-		// int getRank(){
-		// 	return this._rank.getValue();
-		// }
-
-	}
-	
+class Cards{		
 	private ArrayList<Card> _cardSet = new ArrayList<>(52);	
 	// private int[][] cards = new int[52][2];
 
@@ -97,8 +13,7 @@ class Cards{
 			
 		}
 	}
-
-
+	
 	// Cards(){
 	// 	for (int j = 0; j < 4; j++){
 	// 		for (int i = 1; i <= 13; i++){
