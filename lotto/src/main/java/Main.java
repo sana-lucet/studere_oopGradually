@@ -3,15 +3,24 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-        Ball[] balls = new Ball[6];
-        Random random = new Random();
+        Box box = new Box();
         for (int i = 0; i < 6; i++){
-            balls[i] = new Ball(random.nextInt(45) + 1);
+            box.draw();
         }
-        for (Ball ball : balls){
+        for (Ball ball : box.balls){
             System.out.println(ball);
         }
+    }
+}
 
+class Box{
+    private int counter = 0;
+    Ball[] balls = new Ball[6];
+    Random random = new Random();
+
+    public void draw() {
+        balls[counter] = new Ball(random.nextInt(45) + 1);
+        counter++;
     }
 
 }
