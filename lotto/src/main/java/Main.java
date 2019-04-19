@@ -5,44 +5,43 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("=====drawBox======");
+
         Box box = new Box();
-        for (int i = 0; i < 6; i++){
-            box.draw();
-        }
-        int count = 0;
+        box.draw();
+
         for (Ball ball : box.balls){
-            count++;
-            System.out.println("counter:" + count + "\t" + ball);
+            System.out.println(ball);
         }
-//        System.out.println("\n=====ticketBox=====");
-//        Box ticket = new Box();
-//        for (int i = 0; i < 6; i++){
-//            ticket.draw();
-//        }
-//
-//        for (Ball ball : ticket.balls){
-//            System.out.println(ball);
-//        }
+
+        Box ticket = new Box();
+        ticket.draw();
+
+        System.out.println("\n=====ticketBox=====");
+
+        for (Ball ball : ticket.balls){
+            System.out.println(ball);
+        }
     }
 }
 
 class Box{
     private int counter = 0;
     Ball[] balls = new Ball[6];
-    Random random = new Random();
 
     public void draw() {
-        Ball ball;
-        if (!isDuplicate(ball = new Ball(random.nextInt(45) + 1))) {
-            balls[counter] = ball;
-            counter++;
+        while (counter < 6) {
+            if (!isDuplicate(this.balls[counter] = Ball.GET())){
+                counter++;
+            } else {
+                continue;
+            };
         }
     }
 
     private boolean isDuplicate(Ball newBall) {
         boolean result = false;
         for (int i = 0; i < counter; i++){
-            if (balls[i].equals(newBall)){
+            if (balls[i].number == newBall.number){
                 result = true;
             }
         }
@@ -52,8 +51,15 @@ class Box{
 
 class Ball{
     int number;
+    static Random random = new Random();
     Ball(int number){
         this.number = number;
+    }
+
+    public static Ball GET(){
+        int rnum;
+        rnum = random.nextInt(45) + 1;
+        return new Ball(rnum);
     }
 
     @Override
