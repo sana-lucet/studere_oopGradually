@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Main {
@@ -21,16 +22,25 @@ public class Main {
         for (Ball ball : ticket.balls){
             System.out.println(ball);
         }
+        System.out.println("\n======result=======");
+
+        ArrayList<Ball> intersection = ticket.intersect(box);
+
+        for (Ball ball : intersection) {
+            System.out.println(ball);
+        }
     }
 }
 
 class Box{
     private int counter = 0;
-    Ball[] balls = new Ball[6];
-
+    ArrayList<Ball> balls = new ArrayList<Ball>();
+    Ball newBall = null;
     public void draw() {
         while (counter < 6) {
-            if (!isDuplicate(this.balls[counter] = Ball.GET())){
+            newBall = Ball.GET();
+            if (!isDuplicate(newBall)){
+                balls.add(newBall);
                 counter++;
             } else {
                 continue;
@@ -41,8 +51,20 @@ class Box{
     private boolean isDuplicate(Ball newBall) {
         boolean result = false;
         for (int i = 0; i < counter; i++){
-            if (balls[i].number == newBall.number){
+            if (balls.get(i).number == newBall.number){
                 result = true;
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Ball> intersect(Box box) {
+        ArrayList<Ball> result = (ArrayList<Ball>) balls.clone();
+        for (int i = result.size() - 1; i >= 0; i--) {
+            if (box.balls.contains(result.get(i))) {
+                continue;
+            } else {
+                result.remove(result.get(i));
             }
         }
         return result;
