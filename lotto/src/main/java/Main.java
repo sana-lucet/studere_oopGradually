@@ -4,78 +4,45 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
+        Printer printer = new Printer();
 
-        System.out.println("=====drawBox======");
+        Lotto winningBox = new Lotto();
+        winningBox.draw();
+        printer.printBalls(winningBox, "=====drawBox======");
 
-        Box box = new Box();
-        box.draw();
-
-        for (Ball ball : box.balls){
-            System.out.println(ball);
-        }
-
-        Box ticket = new Box();
+        Lotto ticket = new Lotto();
         ticket.draw();
+        printer.printBalls(ticket, "=====ticketBox=====");
 
-        System.out.println("\n=====ticketBox=====");
-
-        for (Ball ball : ticket.balls){
-            System.out.println(ball);
-        }
-        System.out.println("\n======result=======");
-
-        ArrayList<Ball> intersection = ticket.intersect(box);
-
-        for (Ball ball : intersection) {
-            System.out.println(ball);
-        }
+        System.out.println("======result=======");
+        System.out.println(ticket.countMatch(winningBox));
     }
 }
 
-class Box{
-    private int counter = 0;
+class Lotto{
     ArrayList<Ball> balls = new ArrayList<Ball>();
-    Ball newBall = null;
     public void draw() {
-        while (counter < 6) {
-            newBall = Ball.GET();
-            if (!isDuplicate(newBall)){
-                balls.add(newBall);
-                counter++;
-            } else {
+        while (balls.size() < 6) {
+            Ball newBall = Ball.GET();
+            if (balls.contains(newBall)){
                 continue;
-            };
-        }
-    }
-
-    private boolean isDuplicate(Ball newBall) {
-        boolean result = false;
-        for (int i = 0; i < counter; i++){
-            if (balls.get(i).number == newBall.number){
-                result = true;
             }
+            balls.add(newBall);
         }
-        return result;
     }
 
-    public ArrayList<Ball> intersect(Box box) {
+    public int countMatch(Lotto lotto) {
         ArrayList<Ball> result = (ArrayList<Ball>) balls.clone();
-        for (int i = result.size() - 1; i >= 0; i--) {
-            if (box.balls.contains(result.get(i))) {
-                continue;
-            } else {
-                result.remove(result.get(i));
-            }
-        }
-        return result;
+        result.retainAll(lotto.balls);
+        return result.size();
     }
 }
 
 class Ball{
-    int number;
+    int num;
     static Random random = new Random();
-    Ball(int number){
-        this.number = number;
+    Ball(int num){
+        this.num = num;
     }
 
     public static Ball GET(){
@@ -86,14 +53,24 @@ class Ball{
 
     @Override
     public String toString() {
-        return "ball number: " + this.number;
+        return "ball number: " + this.num;
     }
 
     public boolean equals(Object obj) {
         Ball ball = (Ball) obj;
-        if (this.number == ball.number) {
+        if (this.num == ball.num) {
             return true;
         }
         return false;
+    }
+}
+
+class Printer{
+    public void printBalls(Lotto lotto, String string){
+        System.out.println(string);
+        for (Ball ball : lotto.balls){
+            System.out.println(ball.toString());
+        }
+        System.out.println("\n");
     }
 }
