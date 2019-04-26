@@ -4,27 +4,32 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-        Printer printer = new Printer();
+        Viewer viewer = new Viewer();
 
-        Lotto winningBox = new Lotto();
+        Lotto winningBox = new Lotto(viewer);
         winningBox.draw();
-        printer.printBalls(winningBox, "=====drawBox======");
+        winningBox.printLotto("winningBox");
 
-        Lotto ticket = new Lotto();
+        Lotto ticket = new Lotto(viewer);
         ticket.draw();
-        printer.printBalls(ticket, "=====ticketBox=====");
+        ticket.printLotto("ticket");
 
-        System.out.println("======result=======");
-        System.out.println(ticket.countMatch(winningBox));
+        ticket.printMatchResult(winningBox);
     }
 }
 
 class Lotto{
+    private final Viewer viewer;
     ArrayList<Ball> balls = new ArrayList<Ball>();
+
+    public Lotto(Viewer viewer) {
+        this.viewer = viewer;
+    }
+
     public void draw() {
-        while (balls.size() < 6) {
+        while (this.balls.size() < 6) {
             Ball newBall = Ball.GET();
-            if (balls.contains(newBall)){
+            if (this.balls.contains(newBall)){
                 continue;
             }
             balls.add(newBall);
@@ -35,6 +40,14 @@ class Lotto{
         ArrayList<Ball> result = (ArrayList<Ball>) balls.clone();
         result.retainAll(lotto.balls);
         return result.size();
+    }
+
+    public void printLotto(String type){
+        this.viewer.printBalls(this.balls, type);
+    }
+
+    public void printMatchResult(Lotto lotto) {
+        this.viewer.printResult(this, lotto);
     }
 }
 
@@ -65,12 +78,18 @@ class Ball{
     }
 }
 
-class Printer{
-    public void printBalls(Lotto lotto, String string){
-        System.out.println(string);
-        for (Ball ball : lotto.balls){
+class Viewer{
+    public void printBalls(ArrayList<Ball> balls, String type) {
+        if (type == "winningBox") System.out.println("=====drawBox======");
+        if (type == "ticket") System.out.println("=====ticketBox=====");
+        for (Ball ball : balls){
             System.out.println(ball.toString());
         }
-        System.out.println("\n");
+        System.out.print("\n");
+    }
+
+    public void printResult(Lotto ticket, Lotto box) {
+        System.out.println("======result=======");
+        System.out.println(ticket.countMatch(box));
     }
 }
