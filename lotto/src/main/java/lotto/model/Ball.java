@@ -5,7 +5,7 @@ import java.util.Random;
 public class Ball{
     int num;
     static Random random = new Random();
-    Ball(int num){
+    public Ball(int num){
         this.num = num;
     }
 

@@ -1,16 +1,18 @@
 package lotto.controller;
 
-import lotto.view.Viewer;
+import lotto.view.LotteryEventListener;
 import lotto.model.Ball;
 
 import java.util.ArrayList;
 
 public class Lotto{
-    private final Viewer viewer;
+    private final LotteryEventListener viewer;
+    private final String lottoType;
     ArrayList<Ball> balls = new ArrayList<Ball>();
 
-    public Lotto(Viewer viewer) {
+    public Lotto(String lottoType, LotteryEventListener viewer) {
         this.viewer = viewer;
+        this.lottoType = lottoType;
     }
 
     public void draw() {
@@ -19,8 +21,9 @@ public class Lotto{
             if (this.balls.contains(newBall)){
                 continue;
             }
-            balls.add(newBall);
+            this.addBall(newBall);
         }
+        printLotto();
     }
 
     public int countMatch(Lotto lotto) {
@@ -29,16 +32,24 @@ public class Lotto{
         return result.size();
     }
 
-    public void printLotto(String type){
+    public void printMatchResult(Lotto box) {
+        int matchCount = this.countMatch(box);
+        this.viewer.lottoResultAnnounced(matchCount);
+    }
+
+    public ArrayList<Ball> getBalls() {
+        return this.balls;
+    }
+
+    public void addBall(Ball newBall) {
+        this.balls.add(newBall);
+    }
+
+    public void printLotto() {
         ArrayList<String> str = new ArrayList<String>();
         for (Ball ball : this.balls) {
             str.add(ball.toString());
         }
-        this.viewer.printBalls(str, type);
-    }
-
-    public void printMatchResult(Lotto box) {
-        int matchCount = this.countMatch(box);
-        this.viewer.printResult(matchCount);
+        this.viewer.lottoDrawnAnnounced(str, this.lottoType);
     }
 }

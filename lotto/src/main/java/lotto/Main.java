@@ -8,13 +8,13 @@ public class Main {
     public static void main(String[] args) {
         Viewer viewer = new Viewer();
 
-        Lotto winningBox = new Lotto(viewer);
+        Lotto winningBox = new Lotto("winningBox", viewer);
         winningBox.draw();
-        winningBox.printLotto("winningBox");
+        winningBox.printLotto();
 
-        Lotto ticket = new Lotto(viewer);
+        Lotto ticket = new Lotto("ticket", viewer);
         ticket.draw();
-        ticket.printLotto("ticket");
+        ticket.printLotto();
 
         ticket.printMatchResult(winningBox);
     }
