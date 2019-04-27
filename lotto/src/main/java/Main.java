@@ -43,11 +43,16 @@ class Lotto{
     }
 
     public void printLotto(String type){
-        this.viewer.printBalls(this.balls, type);
+        ArrayList<String> str = new ArrayList<String>();
+        for (Ball ball : this.balls) {
+            str.add(ball.toString());
+        }
+        this.viewer.printBalls(str, type);
     }
 
-    public void printMatchResult(Lotto lotto) {
-        this.viewer.printResult(this, lotto);
+    public void printMatchResult(Lotto box) {
+        int matchCount = this.countMatch(box);
+        this.viewer.printResult(matchCount);
     }
 }
 
@@ -79,17 +84,17 @@ class Ball{
 }
 
 class Viewer{
-    public void printBalls(ArrayList<Ball> balls, String type) {
+    public void printBalls(ArrayList<String> strArr, String type) {
         if (type == "winningBox") System.out.println("=====drawBox======");
         if (type == "ticket") System.out.println("=====ticketBox=====");
-        for (Ball ball : balls){
-            System.out.println(ball.toString());
+        for (String str : strArr){
+            System.out.println(str);
         }
         System.out.print("\n");
     }
 
-    public void printResult(Lotto ticket, Lotto box) {
+    public void printResult(int matchCount) {
         System.out.println("======result=======");
-        System.out.println(ticket.countMatch(box));
+        System.out.println(matchCount);
     }
 }
