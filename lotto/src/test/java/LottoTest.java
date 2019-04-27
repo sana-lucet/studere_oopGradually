@@ -1,3 +1,6 @@
+import lotto.Lotto;
+import lotto.view.Viewer;
+import lotto.model.Ball;
 import org.junit.Before;
 import org.junit.Test;
 
